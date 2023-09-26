@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv1 - 자바스크립트 이벤트리스너</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="alert-box" id="alert">
+    <p id="title" class="title1">알림창임</p>
+    <button id="close">닫기</button>
+  </div>
+  <button onclick="alertEvent('block', '아이디가 필요합니다.')">버튼1</button>
+  <button onclick="alertEvent('block','비밀번호가 필요합니다.')">버튼2</button>
+
+  <script>
+    // getElementByClassName
+    function alertEvent(data1, data2) {
+      document.getElementById('alert').style.display = data1;
+      document.getElementsByClassName('title1')[0].innerHTML = data2;
+      // title1 인 모든 클래스를 찾음 -> 인덱스를 지정해줘야됨
+      // 0, 1, 2 ,3 ... 컴퓨터는 0부터 셈
+    }
+
+    document.getElementById('close').addEventListener('click', function () {
+      document.getElementById('alert').style.display = 'none';
+    });
+    // addEventListner
+    // document.getElementById('').addEventListener('', function () {});
+    //                                                  ㄴ 콜백함수
+    // 콜백함수란? 무언가 순차적으로 실핼하고 싶을 때 많이 보이는 함수 형태
+    // 함수 안에 함수가 들어가면 "저건 콜백함수구나" 라고 인지하기
+  </script>
+</body>
+</html>

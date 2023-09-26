@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv1 - function의 파라미터 문법</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="alert-box" id="alert">
+    <p>알림창임</p>
+    <button onclick="알림창열기('none');">닫기</button>
+  </div>
+  <button onclick="알림창열기('block');">버튼1</button>
+  <button onclick="알림창열기('block');">버튼2</button>
+
+  <script>
+    // openAlert('block'); => 구멍에 "block"넣어서 openAlert 안의 코드 실행해줘 | 문자는 '' 안에 작성
+    // 비슷한 함수에 가변적인 부분(구멍) = parameter(파라미터)  -> 필수 문법은 아님
+
+    // 얘가 필요없어짐
+    // function closeAlert() {
+    //   document.getElementById('alert').style.display = 'none';
+    // }
+    function 알림창열기(구멍) {
+      document.getElementById('alert').style.display = 구멍;
+    }
+    // fucntion openAlert(구멍) 의 구멍은 parameter 즉 매개변수 = 변수명
+    // openAlert(구멍) 함수를 호출할 때 구멍은 argument 즉 인자 = 입력값
+
+    // 2. example
+    function plus(구멍) {
+      2 + 구멍
+    }
+    // 2 + 2 가 하고 싶어 | 2 + 3 하고 싶어
+    plus(1)
+    plus(2)
+    plus(3)
+    
+  </script>
+</body>
+</html>

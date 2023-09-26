@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv1 - 강의소개와 자바스크립트의 기본</title>
+</head>
+<body>
+  <!-- h1#hello{안녕하세요} -->
+  <h1 id="hello">안녕하세요</h1>
+  <h1 id="hi">JS 초보에요</h1>
+
+  <script>
+    document.getElementById('hello').innerHTML = '안녕';
+    // document = html문서
+    // 마침표(.) -> ~의
+    // getElementById('A') = selector(셀렉터) -> 아이디가 'A'인 html 요소(일명 element)을 찾아라
+    // innerHTML -> 내부의 html
+    // = -> 오른쪽에 있는걸 왼쪽에 대입하시오! 라는 뜻
+    // '안녕' -> 안녕이라는 문자(큰 따옴표"", 작은 따옴표'' 안에 담긴 것은 항상 문자)
+
+    // document.셀렉터('A').메소드(함수) = 'B'
+
+    // 왜 길게 써야 하는가? 프로그래밍(컴퓨터)는 추상적으로 알지 못함, 즉 상세하게 알려줘야한다.
+    document.getElementById('hi').innerHTML = 'JS 왕초보에요';
+    document.getElementById('hi').style.color = 'green';
+
+  </script>
+
+</body>
+</html>

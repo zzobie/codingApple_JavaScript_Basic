@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv1 - function의 파라미터 문법</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <!-- 숙제1 -->
+  <div class="alert-box" id="alert">
+    <p id="title">알림창임</p>
+    <button onclick="알림창닫기('none')">닫기</button>
+  </div>
+  <button onclick="아이디알림창('block', '아이디가 필요합니다.')">버튼1</button>
+  <button onclick="비번알림창('block','비밀번호가 필요합니다.')">버튼2</button>
+
+  <!-- 숙제2 -->
+  <!-- <div class="alert-box" id="alert">
+    <p id="title">알림창임</p>
+    <button onclick="알림창닫기('none')">닫기</button>
+  </div>
+  <button onclick="alertEvent('block', '아이디가 필요합니다.')">버튼1</button>
+  <button onclick="alertEvent('block','비밀번호가 필요합니다.')">버튼2</button> -->
+
+  <script>
+    function 알림창닫기(구멍) {
+      document.getElementById('alert').style.display = 구멍;
+    }
+
+    // 숙제1
+    function 아이디알림창(data) {
+      document.getElementById('alert').style.display = data;
+      document.getElementById('title').innerHTML = 'block';
+    }
+    function 비번알림창(data) {
+      document.getElementById('alert').style.display = data;
+      document.getElementById('title').innerHTML = 'block';
+    }
+
+    // 숙제2
+    // function alertEvent(data1, data2) {
+    //   document.getElementById('alert').style.display = data1;
+    //   document.getElementById('title').innerHTML = data2;
+    // }
+    
+  </script>
+</body>
+</html>
