@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>lv2 - setTimeout 타이머주는 법</title>
+    <title>lv2 - 정규식으로 이메일형식 검증해보기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/main.css">
   </head>
@@ -94,7 +94,40 @@
           clearTimeout(timer);
         }
       }, 1000)
+      
+      // '문자'.includes('찾을단어')
+      // 정규식 : 문자를 검사하고 싶을때 쓰는 식 format: /문자/
+      // /a/.test('abcde') // true
+      // [] 기호를 이용해서 문자 범위를 지정할 수 있습니다.
+      // ex) /[a-z]/.test('aefg') //true
+      // /[a-zA-z]. 아무 알파벳 하나
+      // /[ㄱ-ㅎ가-힣]/. 아무 한글 하나
+      // /\S/. 아무 문자 하나(특수문자 포함)
+      // /^a/. 문자가 a로 시작하는지
+      // /a$/. 문자가 a로 끝나는지
+      // /a|b/. a 또는 b가 있는지
+      // /a+/. a와 일치하면 반복해서 찾아달라
 
-      </script>
+      // 이메일 정규식
+      // /\S+@\S+\.\S+/. .은 정규식에서 특수한 문자로 사용하기 때문에 .을 찾고 싶으면 \.로 표기해야된다.
+      $('form').on('submit', function (e) {
+        let id = document.getElementById('email').value;
+        let pw = document.getElementById('password').value;
+            
+        if (id  == '' &&  pw == '' ) {
+          e.preventDefault();
+          alert("값을 입력하세요.")
+        } else if (pw.length < 6) {
+          e.preventDefault();
+          alert("6자 이상 입력해주세요.")
+        }
+
+        if(/\S+@\S+\.\S+/.test(id)) {
+          alert('이메일형식아님;')
+        }
+      });
+
+      // 숙제: 폼 전송시 유저가 입력한 비번에 영어대문자 있는지 검사
+    </script>
   </body>
 </html>
