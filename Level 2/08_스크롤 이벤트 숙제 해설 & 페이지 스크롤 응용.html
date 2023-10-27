@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv2 - 스크롤 이벤트 숙제 해설 & 페이지 스크롤 응용</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+  </head>
+  <!-- <body class="dark"> -->
+  <body class="">
+    <!-- modal -->
+    <div class="black-bg">
+      <div class="white-bg">
+        <form action="../success.html">
+          <div class="my-3">
+            <input type="text" class="form-control" id="email">
+          </div>
+          <div class="my-3">
+            <input type="password" class="form-control" id="password">
+          </div>
+          <button type="submit" class="btn btn-primary" id="send">전송</button>
+          <button type="button" class="btn btn-danger" id="close">닫기</button>
+        </form> 
+      </div>
+    </div>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand">zzobie</span>
+        <!-- Dark mode btn -->
+        <span class="badge bg-dark ms-auto mx-3">Dark 🔄</span>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- list-group -->
+    <ul class="list-group">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+      <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+    <div class="main-bg">
+      <h4>shirts on Sale</h4>
+      <button class="btn btn-success" id="login">로그인</button>
+    </div>
+
+    <div style="height: 1000px;"></div>
+
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptas voluptatum minus praesentium fugit debitis at, laborum ipsa itaque placeat sit, excepturi eius. Nostrum perspiciatis, eligendi quae consectetur praesentium exercitationem.
+    </div> 
+    
+
+    <div class="alert alert-danger">
+      <span id="num">5</span>초 이내 구매시 사은품 증정!
+    </div>
+
+    <div style="overflow: hidden;">
+      <div class="slide-container">
+        <div class="slide-box"><img src="../pic/car1.png" alt=""></div>
+        <div class="slide-box"><img src="../pic/car2.png" alt=""></div>
+        <div class="slide-box"><img src="../pic/car3.png" alt=""></div>
+      </div>
+    </div>
+
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+      // 모달창
+      $('#login').on('click', function () { // = document.getElementById('login').addEventListener('click', function () {
+        $('.black-bg').addClass('show-modal') // = document.querySelector('.black-bg').classList.add('show')
+      })
+      $('#close').on('click', function () { // = document.getElementById('close').addEventListener('click', function () {
+        $('.black-bg').removeClass('show-modal') // = document.querySelector('.black-bg').classList.remove('show')
+      })
+
+      // Dark모드 버튼
+      var count = 0;
+
+      $('.badge').on('click', function () {
+        count = count + 1;
+        console.log(count);
+
+        if ( count % 2 == 1) {
+          // badge 홀수 클릭시 내부 글자를 Light로 변경
+          $('.badge').html('Light 🔄')
+        } else {
+          // badge 짝수 클릭시 내부 글자를 Dark로 변경
+          $('.badge').html('Dark 🔄')
+        }
+      })
+
+      // 카운트
+      var count = 5
+      var timer = 
+      setInterval(function() {
+        count -= 1;
+        if (count >= 0) {
+          document.querySelector('#num').innerHTML = count; 
+        } 
+        if(count == 0) {
+          $('.alert').hide();
+          clearTimeout(timer);
+        }
+      }, 1000)
+
+      // 이메일 정규식
+      // /\S+@\S+\.\S+/. .은 정규식에서 특수한 문자로 사용하기 때문에 .을 찾고 싶으면 \.로 표기해야된다.
+      $('form').on('submit', function (e) {
+        let id = document.getElementById('email').value;
+        let pw = document.getElementById('password').value;
+            
+        if (id  == '' &&  pw == '' ) {
+          e.preventDefault();
+          alert("값을 입력하세요.")
+        } else if (pw.length < 6) {
+          e.preventDefault();
+          alert("6자 이상 입력해주세요.")
+        }
+
+        if( /\S+@\S+\.\S+/.test(id) == false ) {
+          alert('이메일형식아님;')
+          e.preventDefault();
+        }
+        if( /[A-Z]/.test(pw) == false ) {
+          alert('대문자가 없습니다.')
+          e.preventDefault();
+        }
+      });
+
+      var 지금사진 = 1;
+      // 응용 1: 이전 버튼 만들어보기
+      $('.prev').on('click', function () {
+        if( 지금사진 == 3) {
+          $('.slide-container').css('transform', 'translateX(-100vw)');
+          지금사진 -= 1;
+        } else if( 지금사진 == 2) {
+          $('.slide-container').css('transform', 'translateX(0vw)');
+          지금사진 -= 1;
+        }
+      })
+      // 응용 2: 사진의 갯수가 늘어도 다음버튼 기능이 잘 동작하게 만들어보기
+      // 문자 중간에 변수 집어넣기
+      $('.next').on('click', function () {
+        $('.slide-container').css('transform', 'translateX(-' + 지금사진 + '00vw)');
+        지금사진 += 1;
+      })
+      // 응용 3
+      $('.slide-1').on('click', function() {
+        $('.slide-container').css('transform', 'translateX(0vw)');
+        지금사진 += 1;
+      })
+      $('.slide-2').on('click', function() {
+        $('.slide-container').css('transform', 'translateX(-100vw)');
+        지금사진 += 1;
+      })
+      $('.slide-3').on('click', function() {
+        $('.slide-container').css('transform', 'translateX(-200vw)');
+        지금사진 += 1;
+      })
+
+      // 1. 스크롤바를 100px 내리면 로고 폰트사이즈를 작게 만들기, 반대로 100px 미만이면 로고 폰트사이즈를 크게 만들기
+      window.addEventListener('scroll', function () { // scroll 감지
+        if (window.scrollY > 100) {
+          $('.navbar-brand').css('font-size', '20px');
+        } else {
+          $('.navbar-brand').css('font-size', '30px');
+        }
+      });
+
+      // $(window).on('scroll', function () {
+      //   $(window).scrollTop(100)
+      // })
+
+      // 2.회원약관 박스를 거의 끝까지 스크롤하면 alert를 띄워주기
+      // div의 스크롤바 내린 양 + 눈에 보이는 div 높이 == div의 실제 높이
+      $('.lorem').on('scroll', function () {
+        var 스크롤양 = document.querySelector('.lorem').scrollTop;
+        var 실제높이 = document.querySelector('.lorem').scrollHeight;
+        var 높이 = document.querySelector('.lorem').clientHeight;
+        
+        if( 스크롤양 + 높이 > 실제높이 - 10) {
+          alert('확인');
+        }
+
+        // Q.현재페이지 끝까지 스크롤 체크는?
+        document.querySelector('html').scrollTop; // = window.scrollY
+        document.querySelector('html').scrollHeight; // 페이지 로드 완료시 실행해야 정확 -> <body> 끝나지 전에 넣는 것이 굳 
+        document.querySelector('html').clientHeight;
+        // document.querySelector('html') = document.documentElement
+      });
+      // scroll 다룰 때 주의점 1 : scroll 이벤트 리스너 안의 코드는 1초에 60번 이상 실행됨 -> 많이 쓰면 성능저하가 일어나 스크롤바 1개당 1개만 쓰기
+      // scroll 다룰 때 주의점 2 : 바닥체크도 여러번 중복으로 해줄듯 -> 막을 수 있는 방법 검색
+
+      // 응용
+      // 페이지 내릴 때 마다 페이지를 얼마나 읽었는지 진척도를 알려주는 UI 같은건 어떻게 만들면 될까요?
+      // 까만색의 가로로 긴 div 박스 하나 만들고 
+      // 페이지를 1% 읽으면 div 박스 길이는 1%
+      // 페이지를 50%정도 읽으면 div 박스 길이는 50% 
+      // 페이지 다 읽으면 div 박스 길이는 100% 
+    </script>
+  </body>
+</html>
