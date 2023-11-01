@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - 데이터바인딩 숙제 & Object 데이터바인딩</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="card-group container">
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5>Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5>Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/600">
+        <div class="card-body">
+          <h5>Card title</h5>
+          <p>가격 : 70000</p>
+          <button class="btn btn-danger">주문하기</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-3">
+      <div class="card p-3">
+        <span id="name">상품명</span>
+        <span class="price">가격</span>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <ul class="list">
+        <li class="tab-button">Products</li>
+        <li class="tab-button orange">Information</li>
+        <li class="tab-button">Shipping</li>
+      </ul>
+      <div class="tab-content">
+        <p>상품설명입니다. Product</p>
+      </div>
+      <div class="tab-content show">
+        <p>스펙설명입니다. Information</p>
+      </div>
+      <div class="tab-content">
+        <p>배송정보입니다. Shipping</p>
+      </div>
+    </div> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+    <script>
+
+      var car2 = { name : '소나타', price : [50000, 3000, 4000] }
+      // Object, Array 안에 아무거나 다 넣기 가능 -> Object, Array도 가능
+      document.querySelector('.price').innerHTML = car2.price[0];
+
+      // 서버/클라이언트 사이드 렌더링
+      // server-side rendering : 서버에서 html을 미리 완성해서 고객에서 보내줌
+      // client-side renering : 서버가 비어있는 html과 데이터만 보내줌
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress' },
+        { id : 1, price : 50000, title : 'Springfield Shirt' },
+        { id : 2, price : 60000, title : 'Black Monastery' }
+      ];
+
+      // 숙제 : 3개의 상품제목, 가격을 html에 넣어보기
+      console.log(products); // 구조파악 -> 순서: id, price, title
+      
+      // document.querySelectorAll('.card-body h5')[0].innerHTML = products[0].title
+      // document.querySelectorAll('.card-body p')[0].innerHTML = products[0].price
+
+      // 라고 하드코딩해도 되지만 반복문으로 어떻게 표현할까? -> 순서를 변수로 만들어주면 될 꺼같다.
+      for (let i = 0; i < products.length; i++) {
+        document.querySelectorAll('.card-body h5')[i].innerHTML = products[i].title
+        document.querySelectorAll('.card-body p')[i].innerHTML = '가격'+' '+products[i].price
+      }
+
+      // 문자 중간에 변수 쉽게 넣기 ``백틱 기호 안에 ${}
+      var a = '안녕';
+      // '문자문자' 사이에 넣고 싶다면
+      console.log('문자'+a+'문자');
+      console.log(`문자${a}문자`);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - Array와 Object 자료형</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+
+  <body class="">
+    <div class="container mt-3">
+      <div class="card p-3">
+        <span id="name">상품명</span>
+        <span class="price">가격</span>
+      </div>
+    </div>
+    
+    <div class="container mt-5">
+      <ul class="list">
+        <li class="tab-button">Products</li>
+        <li class="tab-button orange">Information</li>
+        <li class="tab-button">Shipping</li>
+      </ul>
+      <div class="tab-content">
+        <p>상품설명입니다. Product</p>
+      </div>
+      <div class="tab-content show">
+        <p>스펙설명입니다. Information</p>
+      </div>
+      <div class="tab-content">
+        <p>배송정보입니다. Shipping</p>
+      </div>
+    </div> 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+    <script>
+      // array 자료형
+      var car = ['소나타', 50000, 'white'];
+      car[3] = '아반떼'
+      console.log(car);
+      console.log(car[3]);
+
+      // object 자료형 { key : value }
+      var car2 = { name : '소나타', price : 50000 }
+      console.log(car2);
+      console.log(car2['name']); // = console.log(car2.name);
+
+      // array vs object
+      // 데이터의 정보가 많을시 array는 자료를 뽑을때 몇번째에 있었는지 기억해야됨
+      // array는 왼쪽에 적을 수록 더 앞에 있는 자료, object는 순서개념이 없음
+
+      // 숙제: car2에 저장된 데이터를 html에 집어넣어보시오
+      document.getElementById('name').innerHTML = car2['name'];
+      document.querySelector('.price').innerHTML = car2.price;
+    </script>
+  </body>
+</html>
