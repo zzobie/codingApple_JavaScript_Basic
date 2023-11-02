@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - Select 3 : forEach, for in 반복문</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="container mt-3">
+      <div class="card p-3">
+        <span id="name">상품명</span>
+        <span class="price">가격</span>
+      </div>
+    </div>
+
+    <form class="container my-5 form-group">
+      <p>상품선택</p>
+      <select class="form-select mt-2">
+        <option>모자</option>
+        <option>셔츠</option>
+        <option>바지</option>
+      </select>
+      <select class="form-select mt-2 form-hide">
+        <option>95</option>
+        <option>100</option>
+      </select>
+    </form>
+    
+    <div id="test">
+
+    </div>
+
+    <div class="container mt-5">
+      <ul class="list">
+        <li class="tab-button">Products</li>
+        <li class="tab-button orange">Information</li>
+        <li class="tab-button">Shipping</li>
+      </ul>
+      <div class="tab-content">
+        <p>상품설명입니다. Product</p>
+      </div>
+      <div class="tab-content show">
+        <p>스펙설명입니다. Information</p>
+      </div>
+      <div class="tab-content">
+        <p>배송정보입니다. Shipping</p>
+      </div>
+    </div> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+    <script>
+      // 응용
+      // 1. '모자'를 선택하면 새로 생긴 select 숨기기
+      // 2. 변수화 시키기
+      // 3. e.currentTarget 아니면 this 이런거 쓰기
+
+      // 이걸 하는 이유 -> 위에 처럼 해버리면 확장성이 없음.
+      // html 생성법 1
+      var test = document.createElement('p');
+      test.innerHTML = '안녕';
+      document.querySelector('#test').appendChild(test);
+
+      // html 생성법 2
+      var 템플릿 = '<p>안녕</p>'
+      document.querySelector('#test').insertAdjacentHTML('beforeend', 템플릿);
+      $('#test').append(템플릿); // 위와 같음
+
+      // 바지를 선택했을시 28, 30이 나오게 하려면
+      var pants = [28, 30, 32];
+      var shirts = [95, 100, 105];
+
+      $('.form-select').eq(0).on('input', function(e){
+        
+        // var value = $('.form-select').eq(0).val();
+        // var value = e.currentTarget.value;
+        var value = this.value;
+
+        if (value == '셔츠') {
+          $('.form-select').eq(1).removeClass('form-hide');
+          $('.form-select').eq(1).html('')
+          shirts.forEach(function (a) {
+            $('.form-select').eq(1).append(`<option>${a}</option>`)
+          })
+        } else if (value == '바지') {
+          $('.form-select').eq(1).removeClass('form-hide');
+          $('.form-select').eq(1).html('')
+
+          // if : 매일매일 사이즈가 달라진다면 -> 서버에서 데이터를 가져와서 달라진 수만큼 <option> 바꿔주기 -> 반복문을 쓰면 되지 않을까?
+          // array 자료 뒤에 붙일 수 있는 forEach()라는 기본함수
+          pants.forEach(function (a, i) { // forEach 안에 파라미터 2개 생성 가능, 첫번째는 array안의 데이터, 두번째는 0부터 1씩 증가하는 정수
+          // pants.forEach((a, i) => { // arrow function 쓰면 함수 안의 this 뜻이 달라질 수 있음. 
+            // console.log(a, i);
+            $('.form-select').eq(1).append(`<option>${a}</option>`)
+          });
+        }
+      });
+
+      var obj = { name : 'kim', age : 20 }
+      for (const key in obj) {
+        console.log(obj[key]);
+      }
+
+      // 반복문의 용도
+      // 1. 코드 반복
+      // 2. array, object 데이터 전부 꺼낼때
+      </script>
+
+  </body>
+</html>
