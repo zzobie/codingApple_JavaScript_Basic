@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - Ajax 2 : 상품 더보기 버튼 만들기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="container">
+      <div class="row">
+    
+          <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div>
+    
+      </div>
+    </div> 
+
+    <div class="container">
+      <button class="btn btn-danger" id="more">더보기</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+    <script>
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress'},
+        { id : 1, price : 50000, title : 'Springfield Shirt'},
+        { id : 2, price : 60000, title : 'Black Monastery'}
+      ]
+      
+      // products.forEach((a, i)=>{
+      //   var 템플릿 = 
+      //   `<div class="col-sm-4">
+      //     <img src="https://via.placeholder.com/600" class="w-100">
+      //     <h5>${products[i].title}</h5>
+      //     <p>가격 : ${products[i].price}</p>
+      //   </div>`;
+      //   $('.row').append(템플릿)
+      // });
+
+      $('#more').click(function () {
+        $.get('https://codingapple1.github.io/js/more1.json')
+          .done((data)=>{
+            console.log(data);
+
+            data.forEach((a, i) => {
+              var 템플릿 = 
+                `<div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${products[i].title}</h5>
+                  <p>가격 : ${products[i].price}</p>
+                </div>`;
+              $('.row').append(템플릿)
+            })
+          });
+      });
+
+      // 용용 1
+      // 1. 더보기버튼을 2번째 누르면 7,8,9번째 상품을 더 가져와서 html로 보여주십시오
+      // https://codingapple1.github.io/js/more2.json 여기로 GET요청하면 7,8,9번째 상품이 도착합니다.
+    
+      // 힌트는 유저가 더보기버튼을 몇 번 눌렀는지를 어디 기록해놔야
+      // 내가 버튼 누를 때마다 어디로 GET요청할 지 판단할 수 있겠군요. 
+      // 그리고 그 다음 10,11,12번 상품은 없으니
+      // 버튼을 3번은 못누르게 버튼을 숨기거나 그래도 좋을듯요 
+    
+      // 응용 2
+      // 지금 코드를 잘 보면 forEach() 반복문을 2번 쓴 것 같은데 
+      // 이 코드들이 매우 유사해보입니다.
+      // 함수나 그런걸로 축약해보는 연습도 해보면 좋을 것 같군요 
+
+      // 힌트는 
+      // 함수로 축약할 때 안에 미지의 변수같은게 있으면 파라미터로 바꾸는게 좋다고 했는데
+      // a, i 이런 변수는 이미 콜백함수에 의해 파라미터화가 되어있기 때문에 a, i는 신경안써도 될듯요
+    
+    </script>
+  </body>
+</html>

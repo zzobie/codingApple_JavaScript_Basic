@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - Ajax 1 : 개념정리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="container">
+      <div class="row">
+    
+          <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div>
+    
+      </div>
+    </div> 
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+    <script>
+      // 서버에 데이터 요청할 때는
+      // 1. 어떤 데이터인지 url로 잘 기재하고
+      // 2. 어떤 방법으로 요청할지 결정해야(GET/POST 등)
+      // 데이터를 보내주기
+      // GET,POST 의 단점 : 새로고침이 됨
+
+      // ajax : get, post 요청 할 때 새로고침 없이 데이터를 주고 받게 해줌
+      // ajax GET 요청
+      $.get('https://codingapple1.github.io/hello.txt')
+        .done(function (data) {
+          console.log(data);
+        })
+        // ajax 실패시 특정코드 실행하고 싶으면
+        .fail(function () {
+          console.log('실패함');
+        })
+
+      // ajax POST 요청
+      // $.post('url~', {name : 'kim'})
+
+      $.get('https://codingapple1.github.io/price.json')
+        .done(function (data) {
+          console.log(data.price);
+        })
+
+      // 자바스크립트 ver
+      fetch('https://codingapple1.github.io/price.json')
+        .then(res => res.json())
+        .then(function(data){
+          console.log(data.price)
+        })
+        .catch(function(error){
+          console.log('실패함')
+        });
+
+      fetch('https://codingapple1.github.io/price.json')
+        .then(res => res.json())
+        .then(function(data){
+          console.log(data)
+        })
+        .catch(function(error){
+          console.log('실패함')
+        });
+        // fetch 함수는 Edge 브라우저 이상에서만 동작합니다.
+        // 근데 코드가 한 줄 더 필요한 이유가 뭐냐면 
+      
+        // 서버와 데이터를 주고받을 때는 문자만 주고받을 수 있습니다.
+        // array, object 이런거 전송불가능 
+        // 근데 아까 { price : 5000 } 이런 object 무리없이 받아왔죠?
+        // 어떻게 한거냐면 object를 JSON으로 바꿔서 전송해줘서 그렇습니다.
+      
+        // array 아니면 object에 따옴표를 다 쳐서 '{ "price" : 5000 }' 대충 이렇게 만들면 JSON이라는 자료가 됩니다. 
+        // JSON은 문자로 인식하기 때문에 서버와 데이터주고받기가 가능합니다. 
+      
+        // 하지만 
+        // jQuery의 $.get() 이런건 JSON으로 자료가 도착하면 알아서 array/object 자료로 바꿔줍니다.
+        // 기본함수 fetch() 이런건 JSON으로 자료가 도착하면 알아서 array/object 자료로 바꿔주지 않습니다.
+        // 그래서 fetch() 로 가져온 결과를 array/object로 바꾸고 싶으면 res.json() 이런 코드 한 줄 추가하면 됩니다.
+      
+        // 그게 귀찮으면 jQuery나 axios 이런 라이브러리 설치하면 ajax가 약간 더 간편해집니다.
+      
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress'},
+        { id : 1, price : 50000, title : 'Springfield Shirt'},
+        { id : 2, price : 60000, title : 'Black Monastery'}
+      ]
+      
+      // 숙제
+      // 카드레이아웃 3개 만들기
+      products.forEach((a, i)=>{
+        var 템플릿 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${products[i].title}</h5>
+          <p>가격 : ${products[i].price}</p>
+        </div>`;
+        $('.row').append(템플릿)
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - 장바구니 기능과 localStorage 숙제</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="container">
+      <div class="row">
+    
+          <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div>
+    
+      </div>
+    </div> 
+
+    <div class="container">
+      <button class="btn btn-danger" id="more">더보기</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="price">가격순정렬</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="lang">다나가순정렬</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="map">6만원이하</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+
+    <script>
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress'},
+        { id : 1, price : 50000, title : 'Springfield Shirt'},
+        { id : 2, price : 60000, title : 'Black Monastery'}
+      ]
+
+      products.forEach((a, i)=>{
+        var 템플릿 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${products[i].title}</h5>
+          <p>가격 : ${products[i].price}</p>
+          <button class='buy'>구매</button> 
+        </div>`;
+        $('.row').append(템플릿)
+      });
+      // 숙제
+      // 1. 카드 하단 구매버튼 추가하고 그거 누르면 누른 상품의 이름을 localStorage에 저장하기(array저장 추천)
+      // (팁1) 내가 누른 요소의 형제요소를 찾는 법을 알아야됨
+      // (팁2) localStorage가 비어있을 때는 array를 추가하면 되지만 비어있지않을때는 array를 수정해야됨
+      
+      // 풀이 : 1. 구매버튼 누르면
+      $('.buy').click(function (e) {
+          // 2. 지금 누른 버튼 윗윗 글자를 가져와서
+          var title = $(e.target).siblings('h5').text();
+          // = e.target.previousElementSibling.previousElementSibling
+
+          // 3. localStorage 에 [글자] 저장
+          // 조건 : 이미 cart라는 항목이 있을 경우 수정
+          if ( localStorage.getItem('cart' != null) ) {
+            var 꺼낸거 = JSON.parse(localStorage.cart);
+            console.log(꺼낸거);
+            꺼낸거.push(title);
+            localStorage.setItem('cart', JSON.stringify(꺼낸거));
+          } else {
+            localStorage.setItem('cart', JSON.stringify([title]))
+          }
+      });
+
+      // 2. cart.html 같은 파일 하나 만들어서(장바구니 페이지) 그 페이지 방문시 localStorage에 있던 상품명들을 꺼내서 전부 진열해서 보여주기.
+      // cart.html 참조
+
+      // 응용
+      // 1. 같은 상품을 중복으로 추가되지 않게 : 상품을 추가하기전 상품명이 이미 localStorage에 있는지 확인
+      // 2. 같은 상품 구매를 누르면 상품 갯수가 올라가게 : 상품명 저장시 갯수도 저장 [{title: '상품명a', num: 2}...]
+
+      // ---------------------------------------------------------------
+      // 브라우저 저장공간 : 크롬 개발자도구의 Application 탭 들어가보면 구경가능
+      // Local Storage / Session Storage (key : value 형태로 문자, 숫자 데이터 저장가능, 최대 5MB까지)
+      // ㄴ Local은 브라우저 재접속해도 영구적으로 남아있음, Session는 브라우저 끄면 날아감.
+      // Indexed DB (크고 많은 구조화된 데이터를 DB처럼 저장가능, 문법더러움)
+      // Cookies (유저 로그인정보 저장공간)
+      // Cache Storage (html css js img 파일 저장해두는 공간)
+
+      // 사용법
+      // localStorage.setItem('이름', 'kim'); // 자료저장하는법
+      // localStorage.getItem('이름'); // 자료꺼내는법
+      // localStorage.removeItem('이름'); // 자료삭제하는법
+      // 문자나 숫자만 저장
+      // sessionStorage.~ -> Session Storage에 저장가능
+
+      // 로컬스토리지에 array/object 저장하려면
+      // localStorage.setItem('num', [1,2,3]); // 강제로 문자로 바꿔서 저장하가때문에 깨짐
+      var arr = [1,2,3];
+      var newArr = JSON.stringify(arr); // JSON으로 변경
+
+      localStorage.setItem('num', newArr);
+
+      // 꺼내서 쓸 땐
+      var 꺼낸거 = localStorage.getItem('num');
+      꺼낸거 = JSON.parse(꺼낸거); // 꺼낸거[0] indexing 가능
+      console.log(꺼낸거);
+
+    </script>
+  </body>
+</html>

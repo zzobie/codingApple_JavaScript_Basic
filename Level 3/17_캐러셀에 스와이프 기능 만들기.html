@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv3 - 캐러셀에 스와이프 기능 만들기</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <div style="overflow: hidden">
+    <div class="slide-container">
+      <div class="slide-box">
+        <img src="../pic/car1.png">
+      </div>
+      <div class="slide-box">
+        <img src="../pic/car2.png">
+      </div>
+      <div class="slide-box">
+        <img src="../pic/car3.png">
+      </div>
+    </div>
+</div> 
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+  // // 마우스를 누를 때
+  // $('.slide-box').eq(0).on('mousedown', function () {
+  //   console.log(1);
+  // });
+  // // 마우스를 뗐을 때
+  // $('.slide-box').eq(0).on('mouseup', function () {
+  //   console.log(2);
+  // });
+  // // 어떤 요소 위에서 마우스 이동할 때
+  // $('.slide-box').eq(0).on('mousemove', function () {
+  //   console.log(3);
+  // });
+  // // x(y)측 좌표 알고 싶을 때 (clientY)
+  // $('.slide-box').eq(0).on('mousemove', function (e) {
+  //   console.log(e.clientX);
+  // });
+
+  // 기능 1 : 내가 드래그한 거리만큼 박스도 왼쪽으로 움직이기
+  let 시작좌표 = 0; // 전역변수 : 아무데서나 사용가능한 변수
+  let result = false;
+
+  $('.slide-box').eq(0).on('mousedown', function (e) {
+    console.log(e.clientX);
+    시작좌표 = e.clientX;
+    result = true;
+  });
+  $('.slide-box').eq(0).on('mousemove', function (e) {
+    console.log(e.clientX - 시작좌표);
+    if( result === true ) { // 조건이 없을 시 알아서 움직임
+      $('.slide-container').css('transform', `translateX( ${e.clientX - 시작좌표}px )`)
+    }
+  });
+  $('.slide-box').eq(0).on('mousemove', function (e) {
+    result = false;
+  });
+
+  // 숙제 : 기능 2> 마우스 뗐을 때 일정거리 이상 이동했으면 사진 2 보여줌, 아니면 사진 1 보여줌
+
+</script>
+</body>
+</html>

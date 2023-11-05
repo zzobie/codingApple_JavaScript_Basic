@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>lv3 - sort, map, filter 상품정렬기능 숙제</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+      ul.list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+      }
+      ul.list::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      .tab-button {
+        display: block;
+        padding: 10px 20px 10px 20px;
+        float: left;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        color: grey;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .orange {
+        border-top: 2px solid orange;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid white;
+        border-left: 1px solid #ccc;
+        color: black;
+        margin-top: -2px;
+      }
+      .tab-content {
+        display: none;
+        padding: 10px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+    
+  </head>
+  
+  <body class="">
+    <div class="container">
+      <div class="row">
+    
+          <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div>
+    
+      </div>
+    </div> 
+
+    <div class="container">
+      <button class="btn btn-danger" id="more">더보기</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="price">가격순정렬</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="lang">다나가순정렬</button>
+    </div>
+
+    <div class="container mt-2">
+      <button class="btn btn-danger" id="map">6만원이하</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="../js/tab.js"></script>
+
+    <script>
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress'},
+        { id : 1, price : 50000, title : 'Springfield Shirt'},
+        { id : 2, price : 60000, title : 'Black Monastery'}
+      ]
+
+      $('#price').click(function () {
+        products.sort(function (a, b) {
+          return a.price - b.price
+        });
+        console.log(products);
+
+        $('.row').html('');
+
+        products.forEach((a, i) => {
+          var 템플릿 = 
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${products[i].title}</h5>
+              <p>가격 : ${products[i].price}</p>
+            </div>`;
+          $('.row').append(템플릿)
+        })
+      });
+      
+      // sort 함수 작동원리는 
+      // - a, b는 array안에 있던 자료들임
+      // - return 우측이 양수면 a를 우측으로 보냄
+      // - return 우측이 음수면 b를 우측으로 보냄 
+      // - array 안의 자료를 다 끌고와서 a, b에 계속 넣어봄
+      // 이렇습니다.
+
+      // (1) a, b가 '가', '다' 일 경우 return 우측에 양수가 들어가야 다나가순 정렬이 됩니다. 
+      // (2) a, b가 '다', '나' 일 경우 return 우측에 음수가 들어가야 다나가순 정렬이 됩니다. 
+      // (3) a, b가 '가', '나' 일 경우 return 우측에 양수가 들어가야 다나가순 정렬이 됩니다. 
+
+      // a < b 일 경우 return 우측에 양수가 들어가면 되고 
+      // a > b 일 경우 return 우측에 음수가 들어가면 됩니다. 
+      // a = b 일 경우 return 0
+
+      // 숙제 1 : 다나가순정렬
+      $('#lang').click(function () {
+        products.sort(function (a, b) {
+          if ( a.title < b.title ) {
+            return 1
+          } else {
+            return -1
+          }
+        });
+        console.log(products);
+
+        $('.row').html('');
+
+        products.forEach((a, i) => {
+          var 템플릿 = 
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${products[i].title}</h5>
+              <p>가격 : ${products[i].price}</p>
+            </div>`;
+          $('.row').append(템플릿)
+        })
+      });
+
+      // 숙제 2 : 6만원이하 보기
+      $('#map').click(function () {
+        var result = products.filter(function (a) {
+          return a.price <= 60000
+        });
+        console.log(result);
+
+        $('.row').html('');
+
+        result.forEach((a, i) => {
+          var 템플릿 = 
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${result[i].title}</h5>
+              <p>가격 : ${result[i].price}</p>
+            </div>`;
+          $('.row').append(템플릿)
+        })
+      });
+
+      // 더보기
+      $('#more').click(function () {
+        $.get('https://codingapple1.github.io/js/more1.json')
+          .done((data)=>{
+            console.log(data);
+
+            data.forEach((a, i) => {
+              var 템플릿 = 
+                `<div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${products[i].title}</h5>
+                  <p>가격 : ${products[i].price}</p>
+                </div>`;
+              $('.row').append(템플릿)
+            })
+          });
+      });
+
+      // 응용1. 가나다순 정렬버튼?
+      // 응용2. <input>을 이용해 유저가 직접 가격을 입력해서 필터하는 기능?
+      // 응용3. 원래 순서대로 되돌리기 버튼과 기능을 만들고 싶으면?
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lv3 - 간혹 쓰는 switch 문법</title>
+</head>
+<body>
+  <div id="quiz">
+    <h4>물에 빠지면 누구 먼저 구할 것인가?</h4>
+    <button>와이프</button>
+    <button>부모님</button>
+    <button>강아지</button>
+  </div>
+</body>
+
+<script>
+  // let 변수 = 2 + 2;
+  // switch (변수) {
+  //   case 3:
+  //     alert('변수가 3이네요');
+  //     break;
+  //   case 4:
+  //     alert('변수가 4이네요');
+  //     break;
+  //   default : 
+  //     alert('다 아니네');
+  // }
+  // if 와의 차이점 : switch는 변수 1개만 테스트 가능, if는 다양한 조건식 가능
+
+  document.querySelector('#quiz').addEventListener('click', function(e){
+    switch (e.target.innerHTML){
+      case '와이프':
+        alert('와이프를 좋아하시네요');
+        break
+      case '부모님':
+        alert('효자네요');
+        break
+      case '강아지':
+        alert('역시 사람보단 동물이 더 낫죠');
+        break
+    }
+  });
+
+</script>
+</html>
